@@ -1,0 +1,30 @@
+Dr Keith Reid
+Cailleach Computing Ltd
+September 2021
+
+Documentation for Haskell Poisson modeller
+"Pwaskell"
+
+Theory:
+Poisson distribtions model the incidence of high numbers of independent random
+incidents in a time (or space) series of epochs, or episodes, with a constant
+probaility.  For example, in any 8 hour shifts a doctor may receieve 20 
+phonecalls on average. It may 19, or 21, but 20 is most likely. 17 is less so and 0, and 40, are much less likely.
+
+Haskell is a functional language.  Whereas Python and other object oriented
+languages take "things" and "add bits on", and so are like lego, Haskell is like "marble run" or a domino run.  The thought goes into a continuous process and tthe relatively simple objects elements are not the focus. 
+
+Intent:
+Set an integer number of episodes
+Set an approximate number of incidents per episode
+
+Current state of code:
+ do
+
+:l rand_ex.hs
+
+then
+
+take 3 (randomlist 2)
+
+So that gives 3 from a lzaily contructed infintei list of flaots from seed 2.
