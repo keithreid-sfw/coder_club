@@ -77,7 +77,7 @@ L 	a float (meaning the computer can give it a decimal place) the expected 	numb
 a 	an integer factor which is used to have a high number of possible 
 	incidents - 20 will do see below - this not part of Poisson per se
 m 	an integer the number of trials for your model
-e	Eulers number which we probably have to define as 2.71828
+e	Eulers number which we probably have to define as 2.71828...
 x	the apparent number of incidents that you are estimating probability of
 
 Set up an array whihc will hold the results of trials, it will have m trials
@@ -126,4 +126,8 @@ then
 
 	take 3 (randomlist 2)
 
-So that gives 3 from a lazily constructed infinite list of floats from seed 2.  The seed gives reliability between tests.
+So that gives 3 from a lazily constructed infinite list of floats from seed 2. 
+The seed gives reliability between tests.
+
+currently ghci wont parse defintions like a =2 so I have to do that in the 
+interpreter.
