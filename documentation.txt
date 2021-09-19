@@ -5,26 +5,125 @@ September 2021
 Documentation for Haskell Poisson modeller
 "Pwaskell"
 
-Theory:
-Poisson distribtions model the incidence of high numbers of independent random
+POISSON DISTRIBUTION
+
+Poisson distributions model the incidence of high numbers of independent random
 incidents in a time (or space) series of epochs, or episodes, with a constant
-probaility.  For example, in any 8 hour shifts a doctor may receieve 20 
-phonecalls on average. It may 19, or 21, but 20 is most likely. 17 is less so and 0, and 40, are much less likely.
+probability.  For example, in any 8 hour shift a doctor may receieve 20 
+phonecalls on average. It may 19, or 21, but 20 is most likely. 17 is less 
+likely and 0, and 40, are much less likely.
+
+Haskell as an example of a functional language
 
 Haskell is a functional language.  Whereas Python and other object oriented
-languages take "things" and "add bits on", and so are like lego, Haskell is like "marble run" or a domino run.  The thought goes into a continuous process and tthe relatively simple objects elements are not the focus. 
+languages take "things" and "add bits on", and so are like lego, Haskell is like "marble run" or a domino run.  The thought goes into a continuous process and 
+the relatively simple objects elements are not changed much.  Object-orientated 
+furniture building we do something like 
 
-Intent:
-Set an integer number of episodes
-Set an approximate number of incidents per episode
+	table = top_bit
+	table = table + legs
+	table = turn_upside_down(table)
+	table = table + placemats + food
+
+But functional programming is more like
+
+	table = put_on_top((invert(add_legs(top_bit))), (place_mats, food))
+
+
+MATHS:
+
+The formula for the poisson distribution is hard to write in vim.
+^ 	means exponentiation, "to the power of"
+e 	means "eulers number", approximately 2.71828, 
+	which is a fundamental constant like 1, 0, or Pi
+x 	is the apparent number that your are estimating the probability of
+L 	should be _lambda_ the expected or "average" number of events in a 
+	measured period
+
+
+
+	p = probability of there being x events in a measured period
+
+	     L^x * e^-L
+	p =  _______ 
+
+		x!
+
+EXAMPLE
+
+Dugarte et al, cited in wikipedia, say there are 2.5 goals on average in a world
+cup footy match, and that it's in a Poisson distribution.
+
+The probability of 2 goals is:
+
+		6.25 * e^-2.5
+	p =   __________________
+		    2			(2! is 2*1 = 2)
+
+
+	p ~ 0.257
+
+This estimate of one point is called a "probability mass function"; you can 
+also have a "cumulative" function which would ask about a range of values e.g. 
+"will there be at least 2 goals" which adds the probabilities of 0 and 1 goals.
+
+CODE IMPLEMENTATION
+
+	Part A: Simulation
+
+configure these:
+
+L 	a float (meaning the computer can give it a decimal place) the expected 	number of incidents in a measured period
+a 	an integer factor which is used to have a high number of possible 
+	incidents - 20 will do see below - this not part of Poisson per se
+m 	an integer the number of trials for your model
+e	Eulers number which we probably have to define as 2.71828
+x	the apparent number of incidents that you are estimating probability of
+
+Set up an array whihc will hold the results of trials, it will have m trials
+Set up a repeated loop of m trials.
+For each trial m
+	Create an array of random "element" numbers in the range [0-1.00)
+	Elements are a programming thing, not a Poisson thing
+	If they are over 0.05 they represent an incident.
+	If L is 8, have 20 * 8 = 160 elements in a block representing 
+	  the potentiality of a measured block. There will be about 8 
+	  that incide (is that a word?) per trial - call that the count
+	Count the incidents
+	Stick that into your results array
+	Go round
+End up with an array like (6,7,8,8,8,7,6,8,9,9,7,8,6,8,7,8,8,8,7,9,4,8...
+Count how many of each count there are
+That's your distribution
+I can't do graphs in Haskell yet. But I can make a data set that can be drawn 
+by Python. Or maybe a cheesy ASCII graph.  
+
+
+	Part B: Idealised graph preparation
+
+Use the formula to plot a graph for comparison.
+
+
+	Part C: Checking
+
+Quantify the accuracy between the two probably using Chi Squared
+
+
+	Part D: Stress Testing
+
+Mess with the assumptions of Poisson and see how it affects C
+
+
+Documentation for Users:
 
 Current state of code:
- do
 
-:l rand_ex.hs
+do
+
+	:l rand_ex.hs
 
 then
 
-take 3 (randomlist 2)
+	take 3 (randomlist 2)
 
-So that gives 3 from a lzaily contructed infintei list of flaots from seed 2.
+So that gives 3 from a lazily constructed infinite list of floats from seed 2.  The seed gives reliability between tests.
